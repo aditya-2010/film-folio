@@ -87,7 +87,7 @@ export default function App() {
         setError("");
 
         const res = await fetch(
-          `http://omdbapi.com/?apikey=${KEY}&s=${query}`,
+          `https://omdbapi.com/?apikey=${KEY}&s=${query}`,
           { signal: controller.signal }
         );
         if (!res.ok)
