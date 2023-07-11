@@ -31,6 +31,28 @@ export default function MovieDetails({
     getMovieDetails();
   }, [selectedId]);
 
+  useEffect(() => {
+    if (!movie.Title) return;
+    document.title = `${movie.Title} | FilmFolio`;
+
+    // Cleanup
+    return () => {
+      document.title = "FilmFolio";
+    };
+  }, [movie.Title]);
+
+  useEffect(() => {
+    function callBack(e) {
+      if (e.code === "Escape") onCloseMovie();
+    }
+
+    document.addEventListener("keydown", callBack);
+
+    return function () {
+      document.removeEventListener("keydown", callBack);
+    };
+  }, [onCloseMovie]);
+
   function handleAdd() {
     const newWatched = {
       imdbId: selectedId,
