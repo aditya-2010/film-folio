@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import StarRating from "./StarRating";
 import Loader from "./Loader";
+import { useKey } from "../hooks/useKey";
 
 const KEY = "c1608533";
 
@@ -13,6 +14,8 @@ export default function MovieDetails({
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState("");
+
+  useKey("Escape", onCloseMovie);
 
   const currMovie = watchedMovies
     .filter((movie) => selectedId === movie.imdbId)
@@ -40,18 +43,6 @@ export default function MovieDetails({
       document.title = "FilmFolio";
     };
   }, [movie.Title]);
-
-  useEffect(() => {
-    function callBack(e) {
-      if (e.code === "Escape") onCloseMovie();
-    }
-
-    document.addEventListener("keydown", callBack);
-
-    return function () {
-      document.removeEventListener("keydown", callBack);
-    };
-  }, [onCloseMovie]);
 
   function handleAdd() {
     const newWatched = {
